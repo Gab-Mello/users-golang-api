@@ -11,7 +11,7 @@ func NewRouter(uh *user.Handler) http.Handler {
 	r := chi.NewRouter()
 
 	r.Route("/v1", func(r chi.Router) {
-		user.RegisterRoutes(r, uh)
+		r.Mount("users", user.Routes(uh))
 	})
 
 	return r

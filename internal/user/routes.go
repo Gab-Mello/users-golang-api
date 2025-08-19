@@ -1,10 +1,18 @@
 package user
 
-import "github.com/go-chi/chi/v5"
+import (
+	"net/http"
 
-func RegisterRoutes(r chi.Router, h *Handler) {
-	r.Route("/users", func(r chi.Router) {
-		r.Get("/{id}", h.GetByID)
-		r.Post("/", h.Create)
-	})
+	"github.com/go-chi/chi/v5"
+)
+
+func Routes(h *Handler) http.Handler {
+	r := chi.NewRouter()
+
+	r.Get("/", h.Create)
+	r.Post("/", h.Get)
+	r.Get("/{id}", h.List)
+	r.Delete("/{id}", h.Delete)
+
+	return r
 }
